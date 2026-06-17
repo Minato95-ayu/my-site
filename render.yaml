@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: minato95-portfolio
+    runtime: node
+    region: oregon
+    plan: free
+    
+    # Build configuration
+    buildCommand: corepack pnpm install && corepack pnpm build
+    startCommand: NODE_ENV=production node dist/index.js
+    
+    # Environment
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+    
+    # Health check
+    healthCheckPath: /
+    
+    # Deployment hooks
+    preDeployCommand: corepack pnpm install
